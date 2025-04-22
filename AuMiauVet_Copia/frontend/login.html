@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - AuMiau Vet</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
+</head>
+<body>
+  <header class="app-header">
+    <img src="img/logo.png" alt="Logo" class="app-logo-img" />
+    <div class="secure-area">
+      <img src="img/cadeado.png" alt="Cadeado" class="cadeado-icon" />
+      <span class="secure-text">Ambiente Seguro</span>
+    </div>
+  </header>
+
+  <main class="login-main">
+    <div class="login-page-container">
+      <div class="login-box">
+        <img src="img/cao_gato.png" alt="Cão e Gato" class="login-pet-img" />
+        <div class="login-form-section">
+          <form id="loginForm">
+            <input type="email" placeholder="Usuário/E-mail" name="email" required />
+            <div class="senha-wrapper">
+              <input type="password" placeholder="Senha" name="senha" id="senha" required />
+              <button type="button" id="toggleSenha" class="toggle-senha-btn">👁</button>
+            </div>
+            <button type="submit" class="login-submit-btn">Entrar</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="login-info-box">
+        <div class="login-info-content">
+          <p class="login-signup-msg">Ainda não tem conta?<br>Cadastre-se agora</p>
+          <p class="login-desc">
+            Com nosso sistema exclusivo, funcionários agendam banhos, consultas e exames com muito mais praticidade, rapidez e segurança. Aproveite essa facilidade exclusiva para nossos funcionários! Cadastre-se agora!
+          </p>
+          <button class="login-signup-btn" id="btn-criar-conta">Criar minha conta</button>
+          <img src="img/casinha.png" alt="Casinha Pet" class="login-casinha-img" />
+        </div>
+      </div>
+    </div>
+   </main>
+
+   <script>
+    const form = document.getElementById('loginForm');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = form.email.value;
+      const senha = form.senha.value;
+
+      const resultado = await fazerLogin(email, senha);
+
+      if (resultado.token) {
+        localStorage.setItem('token', resultado.token);
+        alert('Login realizado com sucesso!');
+        window.location.href = 'dashboard.html'; // redireciona após login
+      } else {
+        alert(resultado.erro || 'Erro ao fazer login');
+      }
+    });
+    document.getElementById('toggleSenha').addEventListener('click', () => {
+      const inputSenha = document.getElementById('senha');
+      const tipoAtual = inputSenha.getAttribute('type');
+      inputSenha.setAttribute('type', tipoAtual === 'password' ? 'text' : 'password');
+    });
+    document.getElementById("btn-criar-conta").addEventListener("click", () => {
+      window.location.href = "cadastro.html";
+    });
+  </script>
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Agendamento - AuMiau Vet</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="agendamento-page-container">
+    <h2 class="agendamento-title">Editar Agendamento</h2>
+    <form id="form-editar" class="agendamento-form">
+      <div class="agendamento-form-group">
+        <label for="nome_pet">Nome do Pet</label>
+        <input type="text" name="nome_pet" id="nome_pet" required />
+      </div>
+    
+      <div class="agendamento-form-group">
+        <label for="raca">Raça</label>
+        <input type="text" name="raca" id="raca" required />
+      </div>
+    
+      <div class="agendamento-form-group">
+        <label for="data_hora">Data e Hora</label>
+        <input type="datetime-local" name="data_hora" id="data_hora" required />
+      </div>
+    
+      <div class="agendamento-form-group">
+        <label for="observacoes">Observações</label>
+        <textarea name="observacoes" id="observacoes" required></textarea>
+      </div>
+    
+      <div class="agendamento-form-group">
+        <label for="tipo">Tipo de Serviço</label>
+        <select name="tipo" id="tipo" required>
+          <option value="">Selecione o tipo de serviço</option>
+          <option value="Banho">Banho</option>
+          <option value="Consulta">Consulta</option>
+          <option value="Tosa">Tosa</option>
+          <option value="Exame">Exame</option>
+        </select>
+      </div>
+    
+      <div class="agendamento-form-group">
+        <label for="imagem">Nova imagem (opcional)</label>
+        <input type="file" name="imagem" id="imagem" />
+        <img id="preview" style="max-width: 70%; margin-top: 10px; display: none; border-radius: 10px;" />
+      </div>
+    
+      <div class="agendamento-button-group">
+        <button type="submit" class="agendamento-btn-primary">Salvar alterações</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const token = localStorage.getItem("token");
+    const form = document.getElementById("form-editar");
+    const inputImagem = document.getElementById('imagem');
+    const previewImg = document.getElementById('preview');
+
+    async function carregarAgendamento() {
+      try {
+        const resposta = await fetch(`http://localhost:3000/api/agendamentos`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        const agendamentos = await resposta.json();
+        const agendamento = agendamentos.find((a) => a.id == id);
+
+        if (!agendamento) return alert("Agendamento não encontrado.");
+
+        form.nome_pet.value = agendamento.nome_pet;
+        form.raca.value = agendamento.raca;
+        form.data_hora.value = new Date(agendamento.data_hora).toISOString().slice(0, 16);
+        form.observacoes.value = agendamento.observacoes;
+        form.tipo.value = agendamento.tipo;
+      } catch (err) {
+        alert("Erro ao carregar agendamento.");
+        console.error(err);
+      }
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append("nome_pet", form.nome_pet.value);
+      formData.append("raca", form.raca.value);
+      formData.append("data_hora", form.data_hora.value);
+      formData.append("observacoes", form.observacoes.value);
+      formData.append("tipo", form.tipo.value);
+      if (form.imagem.files[0]) {
+        formData.append("imagem", form.imagem.files[0]);
+      }
+
+      try {
+        const resposta = await fetch(`http://localhost:3000/api/agendamentos/${id}`, {
+          method: "PUT",
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData
+        });
+
+        let resultado;
+            try {
+            resultado = await resposta.json();
+            } catch {
+            resultado = {};
+            }
+
+        if (resposta.ok) {
+          alert("Agendamento atualizado com sucesso!");
+          window.location.href = "dashboard.html";
+        } else {
+          alert(resultado.erro || "Erro ao atualizar agendamento");
+        }
+      } catch (err) {
+        alert("Erro interno.");
+        console.error(err);
+      }
+    });
+
+    carregarAgendamento();
+
+    // preview de imagem 
+    inputImagem.addEventListener('change', () => {
+    const file = inputImagem.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewImg.src = e.target.result;
+        previewImg.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      previewImg.style.display = 'none';
+      previewImg.src = '';
+    }
+  });
+  </script>
+</body>
+</html>

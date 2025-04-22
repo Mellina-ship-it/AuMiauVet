@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro - AuMiau Vet</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <img src="img/logo.png" alt="Logo" class="app-logo-img" />
+    <div class="secure-area">
+      <img src="img/cadeado.png" alt="Cadeado" class="cadeado-icon" />
+      <span class="secure-text">Ambiente Seguro</span>
+    </div>
+  </header>
+
+  <main class="cadastro-main">
+    <div class="cadastro-container">
+      <div class="cadastro-box">
+        <img src="img/cao_gato.png" alt="Cão e Gato" class="cadastro-pet-img" />
+        <form id="cadastroForm">
+          <input type="text" name="nome" placeholder="Nome e sobrenome" required />
+          <input type="text" name="cpf" placeholder="CPF" required />
+          <input type="email" name="email" placeholder="E-mail" required />
+          <input type="password" name="senha" placeholder="Senha" required />
+          <input type="password" name="confirmaSenha" placeholder="Confirmação de senha" required />
+          <button type="submit" class="signup-btn">Criar minha conta</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/script.js"></script>
+  <script>
+    const form = document.getElementById('cadastroForm');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nome = form.nome.value;
+      const cpf = form.cpf.value;
+      const email = form.email.value;
+      const senha = form.senha.value;
+      const confirmaSenha = form.confirmaSenha.value;
+
+      if (senha !== confirmaSenha) {
+        alert('As senhas não coincidem!');
+        return;
+      }
+
+      const resultado = await cadastrarFuncionario(nome, cpf, email, senha);
+
+      if (resultado.mensagem) {
+        alert('Funcionário cadastrado com sucesso!');
+        window.location.href = 'login.html';
+      } else {
+        alert(resultado.erro || 'Erro ao cadastrar funcionário');
+      }
+    });
+  </script>
+</body>
+</html>
