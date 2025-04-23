@@ -42,32 +42,53 @@ O AumiauVet é um sistema web desenvolvido para uma clínica veterinária fictí
 <img src="https://img.shields.io/badge/MySQL_Workbench-4479A1?style=flat-square&logo=mysql&logoColor=white" height="25">
 
 ---
+### 🚀 Como Rodar o Projeto
 
-## 🚀 Como Rodar o Projeto
+Para executar o projeto localmente, siga estas etapas:
 
-```bash
-# 1. Clonar o projeto
-git clone https://github.com/seuusuario/AuMiauVet.git
-cd AuMiauVet
+1.  **Clone o repositório:**
 
-# 2. Instalar dependências
-cd backend
-npm install
+    ```bash
+    git clone [https://github.com/seuusuario/AuMiauVet.git](https://github.com/seuusuario/AuMiauVet.git)
+    cd AuMiauVet
+    ```
 
-# 3. Configurar .env (crie o arquivo na raiz do backend)
-echo "DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=sua_senha
-DB_NAME=petshop
-PORT=3000
-JWT_SECRET=seu_segredo_jwt" > .env
+2.  **Instale as dependências do back-end:**
 
-# 4. Importar banco (MySQL Workbench)
-#    - Crie um banco 'petshop'
-#    - Importe banco_petshop.sql
+    ```bash
+    cd backend
+    npm install
+    ```
 
-# 5. Iniciar servidor
-npm run dev
+3.  **Configure as variáveis de ambiente:**
+
+    Crie um arquivo `.env` na pasta `backend` e adicione as seguintes variáveis com suas respectivas configurações:
+
+    ```env
+    DB_HOST=localhost
+    DB_USER=root
+    DB_PASSWORD=sua_senha
+    DB_NAME=petshop
+    PORT=3000
+    JWT_SECRET=seu_segredo_jwt
+    ```
+
+4.  **Configure o banco de dados:**
+
+    * Abra o seu MySQL Workbench.
+    * Crie um novo banco de dados com o nome `petshop`.
+    * Importe o conteúdo do arquivo `banco_petshop.sql` para este banco de dados. *(Certifique-se de que este arquivo esteja disponível no seu projeto ou forneça o caminho correto)*.
+
+5.  **Inicie o servidor:**
+
+    ```bash
+    cd backend
+    npm run dev
+    ```
+
+    A API do back-end estará rodando e acessível em `http://localhost:3000`.
+
+---
 
 ## ✅ Funcionalidades Implementadas
 
