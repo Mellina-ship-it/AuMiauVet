@@ -65,7 +65,7 @@ JWT_SECRET=seu_segredo_jwt" > .env
 # 4. Importar banco (MySQL Workbench)
 #    - Crie um banco 'petshop'
 
-------------------------------------------------
+---
 
 ## ✅ Funcionalidades Implementadas
 
