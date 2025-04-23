@@ -3,16 +3,12 @@
 O AumiauVet é um sistema web desenvolvido para uma clínica veterinária fictícia que oferece serviços como banhos, consultas e exames. O projeto inclui uma plataforma interativa para agendamentos, gestão de pets, além de um dashboard administrativo para facilitar a organização dos atendimento🐾
 
 ## 🎥 Demonstração em Vídeo
-
-<div align="center">
-  <a href="https://youtu.be/L8hXTuz295o?feature=shared" target="_blank">
-    <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Assistir no YouTube" height="50">
-  </a>
-  <br>
+[![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=flat-square&logo=youtube&logoColor=white&label=)](https://youtu.be/L8hXTuz295o?feature=shared)
   <em>Clique no botão acima para ver a demonstração do projeto</em>
 </div>
 
 
+---
 <div align="center">
   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white">
   <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white">
