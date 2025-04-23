@@ -6,6 +6,14 @@ Este projeto foi desenvolvido como atividade individual da disciplina, com foco 
 
 ---
 
+login de teste:
+João da Silva
+cpf: 12345678911
+joao@aumiau.com 
+senha: senha124
+
+---
+
 ## Tecnologias Utilizadas
 
 - *Back-end:* Node.js, Express, MySQL, Bcrypt, JWT, Multer
