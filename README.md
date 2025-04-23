@@ -43,9 +43,6 @@ O AumiauVet é um sistema web desenvolvido para uma clínica veterinária fictí
 
 ---
 
-## 🚀 Como Rodar o Projeto
-
-```bash
 # 1. Clonar o projeto
 git clone https://github.com/seuusuario/AuMiauVet.git
 cd AuMiauVet
@@ -64,8 +61,10 @@ JWT_SECRET=seu_segredo_jwt" > .env
 
 # 4. Importar banco (MySQL Workbench)
 #    - Crie um banco 'petshop'
+#    - Importe banco_petshop.sql
 
----
+# 5. Iniciar servidor
+npm run dev
 
 ## ✅ Funcionalidades Implementadas
 
