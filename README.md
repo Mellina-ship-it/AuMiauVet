@@ -64,6 +64,27 @@ JWT_SECRET=seu_segredo_jwt" > .env
 
 # 4. Importar banco (MySQL Workbench)
 #    - Crie um banco 'petshop'
+
+
+
+## ✅ Funcionalidades Implementadas
+
+- ✔️ **Login com JWT** (Autenticação segura)
+- ✔️ **Cadastro de funcionários** (com senha criptografada)
+- ✔️ **Middleware de proteção de rotas**
+- ✔️ **CRUD de agendamentos**
+- ✔️ **Upload de imagem** (utilizando Multer)
+- ✔️ **Dashboard dinâmico** com cards de resumo
+- ✔️ **Edição e exclusão de agendamentos**
+
+---
+
+## 📌 Observações
+
+- 🔹 O **front-end** consome a API através de: `http://localhost:3000`
+- 🔹 As **imagens dos pets** são salvas na pasta: `/backend/uploads`
+- 🔹 O sistema utiliza **localStorage** para armazenar o **token JWT**
+
 #    - Importe banco_petshop.sql
 
 # 5. Iniciar servidor
