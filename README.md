@@ -1,6 +1,6 @@
 # <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" width="30"> AuMiau Vet 
 
-Sistema de Agendamento de Banhos e Serviços para Pet Shop 🐾
+O AumiauVet é um sistema web desenvolvido para uma clínica veterinária fictícia que oferece serviços como banhos, consultas e exames. O projeto inclui uma plataforma interativa para agendamentos, gestão de pets, além de um dashboard administrativo para facilitar a organização dos atendimento🐾
 
 <div align="center">
   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white">
