@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Novo Agendamento - AuMiau Vet</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="agendamento-page-container">
+    <h2 class="agendamento-title">Novo Agendamento</h2>
+    <form id="form-agendar" class="agendamento-form">
+      <div class="agendamento-form-group">
+        <label for="nome_pet">Nome do Pet</label>
+        <input type="text" name="nome_pet" id="nome_pet" placeholder="Ex: Rex" required />
+      </div>
+
+      <div class="agendamento-form-group">
+        <label for="raca">Raça</label>
+        <input type="text" name="raca" id="raca" placeholder="Ex: Poodle" required />
+      </div>
+
+      <div class="agendamento-form-group">
+        <label for="data_hora">Data e Hora</label>
+        <input type="datetime-local" name="data_hora" id="data_hora" required />
+      </div>
+
+      <div class="agendamento-form-group">
+        <label for="observacoes">Observações</label>
+        <textarea name="observacoes" id="observacoes" placeholder="Descreva alguma informação relevante..." required></textarea>
+      </div>
+
+      <div class="agendamento-form-group">
+        <label for="tipo">Tipo de Serviço</label>
+        <select name="tipo" id="tipo" required>
+          <option value="">Selecione o tipo de serviço</option>
+          <option value="Banho">Banho</option>
+          <option value="Consulta">Consulta</option>
+          <option value="Tosa">Tosa</option>
+          <option value="Exame">Exame</option>
+        </select>
+      </div>
+
+      <div class="agendamento-form-group">
+        <label for="imagem">Foto do Pet</label>
+        <input type="file" name="imagem" id="imagem" required />
+        <img id="preview" style="max-width: 70%; margin-top: 10px; display: none; border-radius: 10px;" />
+      </div>
+
+      <div class="agendamento-button-group">
+        <button type="submit" class="agendamento-btn-primary">Agendar</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("form-agendar");
+    const token = localStorage.getItem("token");
+    const inputImagem = document.getElementById('imagem');
+    const previewImg = document.getElementById('preview');
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append("nome_pet", form.nome_pet.value);
+      formData.append("raca", form.raca.value);
+      formData.append("data_hora", form.data_hora.value);
+      formData.append("observacoes", form.observacoes.value);
+      formData.append("tipo", form.tipo.value);
+      formData.append("imagem", form.imagem.files[0]);
+
+      try {
+        const resposta = await fetch("http://localhost:3000/api/agendamentos", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: formData
+        });
+
+        const resultado = await resposta.json().catch(() => ({})); // previne erro ao fazer .json() de resposta inválida
+
+        if (resposta.ok) {
+          alert("Agendamento criado com sucesso!");
+          window.location.href = "dashboard.html";
+        } else {
+          console.error("Erro na resposta da API:", resultado);
+          alert(resultado.erro || "Erro ao criar agendamento");
+        }
+      } catch (err) {
+        console.error("Erro de rede ou fetch:", err);
+        alert("Erro interno ao criar agendamento.");
+      }
+    });
+    
+    // preview de imagem 
+    inputImagem.addEventListener('change', () => {
+    const file = inputImagem.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewImg.src = e.target.result;
+        previewImg.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      previewImg.style.display = 'none';
+      previewImg.src = '';
+    }
+  });
+  </script>
+</body>
+</html>
