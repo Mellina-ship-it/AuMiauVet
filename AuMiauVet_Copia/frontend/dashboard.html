@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - AuMiau Vet</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="dashboard-page-area">
+      <header class="dashboard-header-area">
+          <img src="img/logo.png" alt="AuMiau Vet Logo" class="dashboard-logo-img">
+      </header>
+
+      <div class="dashboard-content-wrapper">
+          <div class="dashboard-menu-bar">
+              <button class="dashboard-menu-button active">
+                  <img src="img/calendario.png" alt="Ícone Agendamentos">
+                  Agendamentos
+              </button>
+              <button class="dashboard-menu-button" id="btn-novo-agendamento">
+                  <img src="img/circulo.png" alt="Ícone Novo Agendamento">
+                  Novo Agendamento
+              </button>
+          </div>
+
+          <div class="dashboard-main-content">
+              <div class="dashboard-title-agendamentos">Agendamentos</div>
+
+              <div class="dashboard-filter-tabs">
+                  <button class="dashboard-filter-tab active">Todos</button>
+                  <button class="dashboard-filter-tab">Banhos</button>
+                  <button class="dashboard-filter-tab">Tosa</button>
+                  <button class="dashboard-filter-tab">Consultas</button>
+                  <button class="dashboard-filter-tab">Exames</button>
+              </div>
+
+              <div class="dashboard-agendamentos-container" id="lista-agendamentos">
+                <!-- Cards serão inseridos dinamicamente aqui -->
+              </div>
+          </div>
+      </div>
+      <div class="agendamentos-container" id="lista-agendamentos">
+        <!-- Cards serão inseridos dinamicamente aqui -->
+      </div>
+  </div>
+
+  <button class="dashboard-sair-btn" onclick="window.location.href = 'index.html'">Sair</button>
+
+
+  <script>
+    const lista = document.getElementById("lista-agendamentos");
+    
+    // carrega os agendamentos 
+    function adicionarAgendamento(agendamento) {
+      const card = document.createElement("div");
+      card.className = "dashboard-card-novo";
+      card.innerHTML = `
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+          <img src="http://localhost:3000/uploads/${agendamento.imagem}" alt="Pet" style="width: 130px; height: 130px; border-radius: 12px; object-fit: cover;" />
+          <div class="info">
+            <h3>${agendamento.nome_pet}</h3>
+            <h4>${agendamento.tipo}</h4>
+            <p><strong>Raça:</strong> ${agendamento.raca}</p>
+            <p><strong>Data: ${new Date(agendamento.data_hora).toLocaleDateString()}</p>
+            <p><strong>Hora:</strong> ${new Date(agendamento.data_hora).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+            <p><strong>Observações:</strong> ${agendamento.observacoes}</p>
+            <div style="margin-top: 10px;">
+              <button class="botao-editar" onclick="editarAgendamento(${agendamento.id})">Editar</button>
+              <button class="botao-excluir" onclick="excluirAgendamento(${agendamento.id})">Excluir</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      lista.appendChild(card);
+    }
+  
+    async function carregarAgendamentos() {
+      const token = localStorage.getItem("token");
+  
+      try {
+        const resposta = await fetch("http://localhost:3000/api/agendamentos", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        const dados = await resposta.json();
+  
+        if (Array.isArray(dados)) {
+          dados
+            .sort((a, b) => new Date(a.data_hora) - new Date(b.data_hora)) // ordena por data
+            .forEach(adicionarAgendamento);
+        }
+        else {
+          alert("Erro ao carregar agendamentos.");
+        }
+      } catch (err) {
+        console.error("Erro ao buscar agendamentos:", err);
+      }
+    }
+    carregarAgendamentos();
+
+    // botão excluir agendamento
+    async function excluirAgendamento(id) {
+    const confirmar = confirm("Tem certeza que deseja excluir este agendamento?");
+    if (!confirmar) return;
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const resposta = await fetch(`http://localhost:3000/api/agendamentos/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const resultado = await resposta.json();
+      alert(resultado.mensagem || "Agendamento excluído.");
+
+      // Atualiza a lista após exclusão
+      document.getElementById("lista-agendamentos").innerHTML = "";
+      carregarAgendamentos();
+
+    } catch (error) {
+      console.error("Erro ao excluir agendamento:", error);
+      alert("Erro ao excluir agendamento.");
+    }
+  }
+
+  // editar agendamento
+  function editarAgendamento(id) {
+    window.location.href = `editar.html?id=${id}`;
+  }
+
+  // novo agendamento
+  document.getElementById("btn-novo-agendamento").addEventListener("click", () => {
+    window.location.href = "agendamento.html";
+  });
+
+  </script>
+</body>
+</html>
