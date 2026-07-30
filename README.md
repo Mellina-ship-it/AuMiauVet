@@ -9,14 +9,6 @@ O AumiauVet é um sistema web desenvolvido para uma clínica veterinária fictí
 *Clique no botão acima para ver a demonstração do projeto*
 
 ---
-<div align="center">
-  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white">
-  <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white">
-  <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white">
-  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white">
-</div>
-
----
 
 ## 🔐 Login de Teste
 **Usuário:** João da Silva  
